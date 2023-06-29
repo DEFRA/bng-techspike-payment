@@ -1,0 +1,8 @@
+{{- include "ffc-helm-library.deployment" (list . "bng-techspike-payment.deployment") -}}
+{{- define "bng-techspike-payment.deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+      - {{ include "ffc-helm-library.container" (list . "bng-techspike-payment.container") }}
+{{- end -}}

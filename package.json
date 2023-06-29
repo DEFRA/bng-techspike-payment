@@ -1,8 +1,8 @@
 {
-  "name": "ffc-template-node",
+  "name": "bng-techspike-payment",
   "version": "0.1.0",
-  "description": "description-of-project-goes-here",
-  "homepage": "https://github.com/DEFRA/ffc-template-node",
+  "description": "Tech spike to demonstrate use of GOV.UK Pay",
+  "homepage": "https://github.com/DEFRA/bng-techspike-payment",
   "main": "app/index.js",
   "scripts": {
     "pretest": "npm run test:lint",

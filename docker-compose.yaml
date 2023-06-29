@@ -1,10 +1,10 @@
 services:
-  ffc-template-node:
+  bng-techspike-payment:
     build:
       context: .
       target: production
-    image: ffc-template-node
-    container_name: ffc-template-node
+    image: bng-techspike-payment
+    container_name: bng-techspike-payment
     environment:
-      APPINSIGHTS_CLOUDROLE: ffc-template-node-local
+      APPINSIGHTS_CLOUDROLE: bng-techspike-payment-local
       APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}

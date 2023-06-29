@@ -1,6 +1,6 @@
 apiVersion: v2
-description: description-of-project-goes-here
-name: ffc-template-node
+description: Tech spike to demonstrate use of GOV.UK Pay
+name: bng-techspike-payment
 # this version is automatically updated in the build pipeline
 version: 1.0.0
 dependencies:
