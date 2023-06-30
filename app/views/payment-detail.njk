@@ -2,10 +2,19 @@
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
 
 {% block pageTitle %}{{ serviceName }}{% endblock %}
 
 {% block content %}
+
+{{ govukBackLink({
+    text: "Back",
+    href: "/view-payments"
+  }) }}
+
+<h1 class="govuk-heading-m">Payment Details</h1>
 
 <dl class="govuk-summary-list">
     <div class="govuk-summary-list__row">
@@ -42,6 +51,14 @@
     </div>
     <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
+        Date
+        </dt>
+        <dd class="govuk-summary-list__value">
+        {{ payment.date }}
+        </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
         Status
         </dt>
         <dd class="govuk-summary-list__value">
@@ -49,6 +66,82 @@
         </dd>
     </div>
 </dl>
+
+<h1 class="govuk-heading-m">Refund Summary</h1>
+
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+        Status
+        </dt>
+        <dd class="govuk-summary-list__value">
+        {{ payment.refund_summary.status | capitalize }}
+        </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+        Amount Available
+        </dt>
+        <dd class="govuk-summary-list__value">
+        £{{ payment.refund_summary.amount_available }}
+        </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+        Amount Submitted
+        </dt>
+        <dd class="govuk-summary-list__value">
+        £{{ payment.refund_summary.amount_submitted }}
+        </dd>
+    </div>
+</dl>
+
+{% if payment.refund_summary.status === "available" %}
+<form method="post" action="/payment-refund/{{payment.payment_id}}">
+    {{ govukInput({
+        id: "refund_amount",
+        name: "refund_amount",
+        label: {
+          text: "What is the refund amount?"
+        },
+        prefix: {
+          text: "£"
+        },
+        classes: "govuk-input--width-5",
+        spellcheck: false
+    }) }}
+
+    <input type="hidden" name="refund_available" value="{{payment.refund_summary.amount_available}}" />
+
+    {{ govukButton({
+        text: "Refund payment",
+        classes: "govuk-button--warning"
+    }) }}
+</form>
+{% endif %}
+
+{% if refunds|length %}
+<table class="govuk-table">
+    <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Refund Id</th>
+            <th scope="col" class="govuk-table__header">Created</th>
+            <th scope="col" class="govuk-table__header">Amount</th>
+            <th scope="col" class="govuk-table__header">Status</th>
+        </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+        {% for data in refunds %}
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">{{data.refund_id}}</th>
+                <td class="govuk-table__cell">{{data.date}}</td>
+                <td class="govuk-table__cell">£{{data.amount}}</td>
+                <td class="govuk-table__cell"><div class="govuk-tag app-task-list__tag {{ 'govuk-tag--blue' if data.status === 'started'}} {{ 'govuk-tag--green' if data.status === 'success'}} ">{{data.status}}</div></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
 
 <table class="govuk-table">
     <caption class="govuk-table__caption govuk-table__caption--m">Dates and amounts</caption>
@@ -61,7 +154,7 @@
     <tbody class="govuk-table__body">
         {% for data in events %}
             <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">{{data.updated}}</th>
+                <th scope="row" class="govuk-table__header">{{data.date}}</th>
                 <td class="govuk-table__cell"><div class="govuk-tag app-task-list__tag {{ 'govuk-tag--blue' if data.state.status === 'started'}} {{ 'govuk-tag--green' if data.state.status === 'success'}} ">{{data.state.status}}</div></td>
             </tr>
         {% endfor %}

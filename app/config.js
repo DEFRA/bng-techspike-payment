@@ -3,6 +3,7 @@ const joi = require('joi')
 const schema = joi.object({
   port: joi.number().default(3000),
   paymentApiUrl: joi.string().default('https://publicapi.payments.service.gov.uk/v1/payments'),
+  refundApiUrl: joi.string().default('https://publicapi.payments.service.gov.uk/v1/refunds'),
   paymentApiKey: joi.string().required(),
   isDev: joi.bool().default(false),
   serviceName: joi.string()
@@ -11,6 +12,7 @@ const schema = joi.object({
 const config = {
   port: process.env.PORT,
   paymentApiUrl: process.env.PAYMENT_API_URL,
+  refundApiUrl: process.env.REFUND_API_URL,
   paymentApiKey: process.env.PAYMENT_API_KEY,
   isDev: process.env.NODE_ENV === 'production',
   serviceName: 'BNG Payment Spike'

@@ -12,8 +12,8 @@
     "test:watch": "jest --coverage=false --onlyChanged --watch --runInBand",
     "test:lint": "standard",
     "test:debug": "node --inspect-brk=0.0.0.0 ./node_modules/jest/bin/jest.js --coverage=false --onlyChanged --watch --runInBand --no-cache",
-    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch app/index.js",
-    "start:debug": "nodemon --inspect-brk=0.0.0.0 --ext js --legacy-watch app/index.js"
+    "start:watch": "nodemon --inspect=0.0.0.0 --ext js,njk --legacy-watch app/index.js",
+    "start:debug": "nodemon --inspect-brk=0.0.0.0 --ext js,njk --legacy-watch app/index.js"
   },
   "author": "Defra",
   "contributors": [],
@@ -32,6 +32,7 @@
     "html-webpack-plugin": "^5.5.3",
     "joi": "^17.9.2",
     "mini-css-extract-plugin": "^2.7.6",
+    "moment": "^2.29.4",
     "nunjucks": "^3.2.4",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.63.6",

@@ -1,8 +1,15 @@
 {% extends '_layout.njk' %}
 
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
 {% block pageTitle %}{{ serviceName }}{% endblock %}
 
 {% block content %}
+
+{{ govukBackLink({
+    text: "Back",
+    href: "/"
+  }) }}
 
 <table class="govuk-table">
     <caption class="govuk-table__caption govuk-table__caption--m">Dates and amounts</caption>
@@ -12,6 +19,7 @@
             <th scope="col" class="govuk-table__header">Description</th>
             <th scope="col" class="govuk-table__header">Cardholder</th>
             <th scope="col" class="govuk-table__header">Amount</th>
+            <th scope="col" class="govuk-table__header">Created Date</th>
             <th scope="col" class="govuk-table__header">Status</th>
             <th scope="col" class="govuk-table__header"></th>
         </tr>
@@ -23,6 +31,7 @@
             <td class="govuk-table__cell">{{data.description}}</td>
             <td class="govuk-table__cell">{{data.card_details.cardholder_name}}</td>
             <td class="govuk-table__cell">£{{data.amount}}</td>
+            <td class="govuk-table__cell">{{data.date}}</td>
             <td class="govuk-table__cell">{{data.state.status | upper}}</td>
             <td class="govuk-table__cell"><a class="govuk-link" href="/payment-detail/{{data.payment_id}}">View</a></td>
         </tr>
