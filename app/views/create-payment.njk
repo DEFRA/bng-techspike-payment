@@ -1,0 +1,85 @@
+{% extends '_layout.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% block pageTitle %}{{ serviceName }} - Create{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl">Create Payment</h1>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post" action="/create-payment">
+            <div class="govuk-form-group">
+                {{ govukInput({
+                    id: "reference",
+                    name: "reference",
+                    label: {
+                      text: "What is the reference?"
+                    },
+                    classes: "govuk-input--width-10",
+                    spellcheck: false
+                  }) }}
+            </div>
+
+            <div class="govuk-form-group">
+                {{ govukInput({
+                    id: "description",
+                    name: "description",
+                    label: {
+                      text: "What is this payment for?"
+                    },
+                    classes: "govuk-input--width-10",
+                    spellcheck: false
+                  }) }}
+            </div>
+
+            <div class="govuk-form-group">
+                {{ govukInput({
+                    id: "amount",
+                    name: "amount",
+                    label: {
+                      text: "What is the amount in pounds?"
+                    },
+                    prefix: {
+                      text: "£"
+                    },
+                    classes: "govuk-input--width-5",
+                    spellcheck: false
+                  }) }}
+            </div>
+
+            <div class="govuk-form-group">
+              {{ govukInput({
+                  id: "cardholder_name",
+                  name: "cardholder_name",
+                  label: {
+                    text: "What is the name of the cardholder?"
+                  },
+                  classes: "govuk-input",
+                  spellcheck: false
+                }) }}
+            </div>
+
+            <div class="govuk-form-group">
+              {{ govukInput({
+                  id: "email",
+                  name: "email",
+                  label: {
+                    text: "What is the email of the cardholder?"
+                  },
+                  classes: "govuk-input",
+                  spellcheck: false
+                }) }}
+            </div>
+
+            {{ govukButton({
+                text: "Pay"
+            }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
