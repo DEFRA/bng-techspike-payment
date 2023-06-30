@@ -1,5 +1,6 @@
 {% extends '_layout.njk' %}
 
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% block pageTitle %}{{ serviceName }}{% endblock %}
@@ -12,7 +13,7 @@
         Reference
         </dt>
         <dd class="govuk-summary-list__value">
-        {{ reference }}
+        {{ payment.reference }}
         </dd>
     </div>
     <div class="govuk-summary-list__row">
@@ -20,7 +21,7 @@
         Description
         </dt>
         <dd class="govuk-summary-list__value">
-        {{ description }}
+        {{ payment.description }}
         </dd>
     </div>
     <div class="govuk-summary-list__row">
@@ -28,7 +29,7 @@
         Cardholder
         </dt>
         <dd class="govuk-summary-list__value">
-        {{ card_details.cardholder_name }}
+        {{ payment.card_details.cardholder_name }}
         </dd>
     </div>
     <div class="govuk-summary-list__row">
@@ -36,7 +37,7 @@
         Amount
         </dt>
         <dd class="govuk-summary-list__value">
-        £{{ amount }}
+        £{{ payment.amount }}
         </dd>
     </div>
     <div class="govuk-summary-list__row">
@@ -44,9 +45,35 @@
         Status
         </dt>
         <dd class="govuk-summary-list__value">
-        {{ state.status | upper }}
+        {{ payment.state.status | upper }}
         </dd>
     </div>
 </dl>
+
+<table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--m">Dates and amounts</caption>
+    <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Updated</th>
+            <th scope="col" class="govuk-table__header">State</th>
+        </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+        {% for data in events %}
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">{{data.updated}}</th>
+                <td class="govuk-table__cell"><div class="govuk-tag app-task-list__tag {{ 'govuk-tag--blue' if data.state.status === 'started'}} {{ 'govuk-tag--green' if data.state.status === 'success'}} ">{{data.state.status}}</div></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<form method="post" action="/payment-detail/cancel/{{payment.payment_id}}">
+    {{ govukButton({
+    text: "Cancel payment",
+    classes: "govuk-button--warning"
+    }) }}
+</form>
 
 {% endblock %}

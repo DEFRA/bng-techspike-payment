@@ -8,3 +8,6 @@ services:
     environment:
       APPINSIGHTS_CLOUDROLE: bng-techspike-payment-local
       APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
+      PAYMENT_API_URL: https://publicapi.payments.service.gov.uk/v1/payments
+      PAYMENT_API_KEY:
+
