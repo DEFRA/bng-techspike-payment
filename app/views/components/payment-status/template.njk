@@ -1,0 +1,36 @@
+{# Set classes for this component #}
+{% set classNames = 'govuk-tag app-task-list__tag' %}
+
+{% if params.status === 'created' or params.status === 'pending' %}
+  {% set classNames = classNames + " " + "govuk-tag--yellow" %}
+{% endif %}
+
+{% if params.status === 'started' or params.status === 'available' %}
+  {% set classNames = classNames + " " + "govuk-tag--turquoise" %}
+{% endif %}
+
+{% if params.status === 'submitted' %}
+  {% set classNames = classNames + " " + "govuk-tag--pink" %}
+{% endif %}
+
+{% if params.status === 'capturable' %}
+  {% set classNames = classNames + " " + "govuk-tag--blue" %}
+{% endif %}
+
+{% if params.status === 'success' or params.status === 'full' %}
+  {% set classNames = classNames + " " + "govuk-tag--green" %}
+{% endif %}
+
+{% if params.status === 'failed' %}
+  {% set classNames = classNames + " " + "govuk-tag--red" %}
+{% endif %}
+
+{% if params.status === 'cancelled' or params.status === 'unavailable' %}
+  {% set classNames = classNames + " " + "govuk-tag--grey" %}
+{% endif %}
+
+{% if params.status === 'error' %}
+  {% set classNames = classNames + " " + "govuk-tag--orange" %}
+{% endif %}
+
+<div class="{{ classNames }}">{{ params.status }}</div>

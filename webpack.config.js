@@ -1,4 +1,5 @@
 const path = require('path')
+
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -8,21 +9,18 @@ const isDev = process.env.NODE_ENV === 'development' || process.env.NODE_ENV ===
 console.log(`Running webpack in ${isDev ? 'development' : 'production'} mode`)
 
 module.exports = {
-  entry: {
-    core: './app/frontend/src/entry.js'
-  },
+  entry: './app/frontend/src/entry.js',
   mode: isDev ? 'development' : 'production',
   module: {
     rules: [
       {
-        test: /\.(?:s[ac]|c)ss$/i,
+        test: /\.s[ac]ss$/i,
         use: [
-          'style-loader',
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: '../',
-              esModule: false
+              esModule: false,
+              publicPath: '../'
             }
           },
           'css-loader',
@@ -30,9 +28,9 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: true,
+              sourceMap: isDev,
               sassOptions: {
-                outputStyle: 'compressed'
+                outputStyle: isDev ? 'expanded' : 'compressed'
               }
             }
           }
@@ -40,39 +38,34 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            outputPath: 'images/'
-          }
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[contenthash][ext]'
         }
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            outputPath: 'fonts/'
-          }
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[contenthash][ext]'
         }
       }
     ]
   },
   output: {
-    filename: 'js/[name].[fullhash].js',
-    path: path.resolve(__dirname, 'app/dist'),
-    library: '[name]'
+    filename: 'js/[contenthash].js',
+    path: path.resolve(__dirname, 'app/frontend/dist'),
+    publicPath: '/assets/'
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
-      filename: '../views/_layout.njk',
-      template: 'app/views/_layout.template.njk',
-      chunks: ['core']
+      filename: '../../views/layouts/layout.njk',
+      template: 'app/views/layouts/_layout.njk'
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[fullhash].css'
+      filename: 'css/[contenthash].css'
     })
   ]
 }
