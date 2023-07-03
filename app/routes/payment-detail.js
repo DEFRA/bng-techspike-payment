@@ -35,7 +35,9 @@ module.exports = [
     path: '/payment-detail/cancel/{id}',
     options: {
       handler: async (request, h) => {
-        await post(`${config.paymentApiUrl}/${request.params.id}/cancel`, {}, config.paymentApiKey)
+        console.log(`${config.paymentApiUrl}/${request.params.id}/cancel`)
+        const res = await post(`${config.paymentApiUrl}/${request.params.id}/cancel`, {}, config.paymentApiKey)
+        console.log(res)
         return h.redirect('/view-payments')
       }
     }

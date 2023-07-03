@@ -174,12 +174,13 @@
   </tbody>
 </table>
 
-
-<form method="post" action="/payment-detail/cancel/{{payment.payment_id}}">
-  {{ govukButton({
-  text: "Cancel payment",
-  classes: "govuk-button--warning"
-  }) }}
-</form>
+{% if payment.state.status !== 'success' and payment.state.status !== 'failed'  %}
+  <form method="post" action="/payment-detail/cancel/{{payment.payment_id}}">
+    {{ govukButton({
+    text: "Cancel payment",
+    classes: "govuk-button--warning"
+    }) }}
+  </form>
+{% endif %}
 
 {% endblock %}
