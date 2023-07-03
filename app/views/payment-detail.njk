@@ -174,7 +174,7 @@
   </tbody>
 </table>
 
-{% if payment.state.status !== 'success' and payment.state.status !== 'failed'  %}
+{% if payment.state.status !== 'success' and payment.state.status !== 'failed' and payment.state.status !== 'cancelled'  %}
   <form method="post" action="/payment-detail/cancel/{{payment.payment_id}}">
     {{ govukButton({
     text: "Cancel payment",

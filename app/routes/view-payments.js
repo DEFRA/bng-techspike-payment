@@ -10,9 +10,9 @@ module.exports = [
       handler: async (request, h) => {
         const query = new URLSearchParams(request.query)
         const res = await get(`${config.paymentApiUrl}?${query}`, config.paymentApiKey)
-
+        console.log(res)
         const paymentRes = res.results.map(r => {
-          const date = moment(r.created_date).format('DD-MM-YYYY HH:MM')
+          const date = moment(r.created_date).format('DD-MM-YYYY hh:mm:ss')
 
           return { ...r, date }
         })

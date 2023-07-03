@@ -12,16 +12,20 @@ module.exports = [
         let refundResponse = await get(`${config.paymentApiUrl}/${request.params.id}/refunds`, config.paymentApiKey)
         let eventsResponse = await get(`${config.paymentApiUrl}/${request.params.id}/events`, config.paymentApiKey)
 
-        paymentResponse.date = moment(paymentResponse.created_date).format('DD-MM-YYYY HH:MM')
+        console.log(paymentResponse)
+        console.log(refundResponse)
+        console.log(eventsResponse)
+
+        paymentResponse.date = moment(paymentResponse.created_date).format('DD-MM-YYYY hh:mm:ss')
 
         refundResponse = refundResponse._embedded.refunds.map(r => {
-          const date = moment(r.created_date).format('DD-MM-YYYY HH:MM:SS')
+          const date = moment(r.created_date).format('DD-MM-YYYY hh:mm:ss')
 
           return { ...r, date }
         })
 
         eventsResponse = eventsResponse.events.map(r => {
-          const date = moment(r.updated).format('DD-MM-YYYY HH:MM:SS')
+          const date = moment(r.updated).format('DD-MM-YYYY hh:mm:ss')
 
           return { ...r, date }
         })
@@ -35,7 +39,6 @@ module.exports = [
     path: '/payment-detail/cancel/{id}',
     options: {
       handler: async (request, h) => {
-        console.log(`${config.paymentApiUrl}/${request.params.id}/cancel`)
         const res = await post(`${config.paymentApiUrl}/${request.params.id}/cancel`, {}, config.paymentApiKey)
         console.log(res)
         return h.redirect('/view-payments')

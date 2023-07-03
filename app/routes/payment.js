@@ -19,6 +19,7 @@ module.exports = [
     options: {
       handler: async (request, h) => {
         const res = await get(`${config.paymentApiUrl}/${request.params.id}`, config.paymentApiKey)
+        console.log(res)
         return h.response(res).code(200)
       },
       description: 'Get payment by id',

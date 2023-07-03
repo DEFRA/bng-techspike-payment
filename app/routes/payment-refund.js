@@ -14,8 +14,8 @@ module.exports = [
           refund_amount_available: parseInt(request.payload.refund_available)
         }
 
-        await post(`${config.paymentApiUrl}/${request.params.id}/refunds`, payload, config.paymentApiKey)
-
+        const res = await post(`${config.paymentApiUrl}/${request.params.id}/refunds`, payload, config.paymentApiKey)
+        console.log(res)
         return h.redirect(referrer)
       }
     }
