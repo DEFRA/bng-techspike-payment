@@ -10,15 +10,13 @@ module.exports = {
         if (response.variety === 'view') {
           const ctx = response.source.context || {}
 
-          const { path } = request
-
           const serviceUrl = '/'
-          
+
           ctx.serviceName = serviceName
           ctx.serviceUrl = serviceUrl
 
           response.source.context = ctx
-        } 
+        }
 
         return h.continue
       })

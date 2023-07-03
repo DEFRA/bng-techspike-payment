@@ -11,7 +11,7 @@ module.exports = [
         const paymentResponse = await get(`${config.paymentApiUrl}/${request.params.id}`, config.paymentApiKey)
         let refundResponse = await get(`${config.paymentApiUrl}/${request.params.id}/refunds`, config.paymentApiKey)
         let eventsResponse = await get(`${config.paymentApiUrl}/${request.params.id}/events`, config.paymentApiKey)
-        
+
         paymentResponse.date = moment(paymentResponse.created_date).format('DD-MM-YYYY HH:MM')
 
         refundResponse = refundResponse._embedded.refunds.map(r => {
@@ -21,11 +21,11 @@ module.exports = [
         })
 
         eventsResponse = eventsResponse.events.map(r => {
-            const date = moment(r.updated).format('DD-MM-YYYY HH:MM:SS')
+          const date = moment(r.updated).format('DD-MM-YYYY HH:MM:SS')
 
-            return { ...r, date }
+          return { ...r, date }
         })
-            
+
         return h.view('payment-detail', { payment: paymentResponse, events: eventsResponse, refunds: refundResponse })
       }
     }

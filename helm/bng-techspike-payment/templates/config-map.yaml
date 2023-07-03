@@ -1,7 +1,0 @@
-{{- include "ffc-helm-library.container-config-map" (list . "bng-techspike-payment.config-map") -}}
-{{- define "bng-techspike-payment.config-map" -}}
-data:
-  NODE_ENV: {{ quote .Values.environment }}
-  PORT: {{ quote .Values.container.port }}
-  APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
-{{- end -}}

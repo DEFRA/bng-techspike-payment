@@ -1,9 +1,0 @@
-apiVersion: v2
-description: Tech spike to demonstrate use of GOV.UK Pay
-name: bng-techspike-payment
-# this version is automatically updated in the build pipeline
-version: 1.0.0
-dependencies:
-- name: ffc-helm-library
-  version: 3.4.0
-  repository: https://raw.githubusercontent.com/defra/ffc-helm-repository/master/

@@ -19,9 +19,9 @@ module.exports = [
     options: {
       validate: {
         payload: joi.object().concat(schema),
-          failAction: async (request, h, err) => {
-            console.log(err)
-            return h.response('Error').code(500)
+        failAction: async (request, h, err) => {
+          console.log(err)
+          return h.response('Error').code(500)
         }
       },
       handler: async (request, h) => {
@@ -32,11 +32,11 @@ module.exports = [
           reference: payload.reference,
           description: payload.description,
           prefilled_cardholder_details: {
-            cardholder_name: payload.cardholder_name,
+            cardholder_name: payload.cardholder_name
           },
           email: payload.email,
-          return_url: "http://localhost:3000",
-          language: "en"
+          return_url: 'http://localhost:3000',
+          language: 'en'
         }
 
         const res = await post(config.paymentApiUrl, payment, config.paymentApiKey)
@@ -46,5 +46,5 @@ module.exports = [
         return h.redirect(res._links.next_url.href, 301)
       }
     }
-  },
+  }
 ]

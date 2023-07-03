@@ -1,3 +1,0 @@
-{{- include "ffc-helm-library.cluster-ip-service" (list . "bng-techspike-payment.cluster-ip-service") -}}
-{{- define "bng-techspike-payment.cluster-ip-service" -}}
-{{- end -}}

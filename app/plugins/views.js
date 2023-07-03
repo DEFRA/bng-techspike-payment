@@ -22,7 +22,7 @@ module.exports = {
           ], {
             autoescape: true,
             watch: false
-          }) 
+          })
 
           return next()
         }
