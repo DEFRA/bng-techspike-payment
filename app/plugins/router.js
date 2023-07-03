@@ -4,6 +4,7 @@ const routes = [].concat(
   require('../routes/view-payments'),
   require('../routes/payment-detail'),
   require('../routes/payment-refund'),
+  require('../routes/payment-successful'),
   require('../routes/static'),
   require('../routes/payment')
 )

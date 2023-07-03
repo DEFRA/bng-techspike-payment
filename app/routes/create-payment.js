@@ -35,7 +35,7 @@ module.exports = [
             cardholder_name: payload.cardholder_name
           },
           email: payload.email,
-          return_url: 'http://localhost:3000',
+          return_url: 'http://localhost:3000/payment-successful',
           language: 'en'
         }
 
