@@ -17,8 +17,6 @@ module.exports = [
           return { ...r, date }
         })
 
-        console.log(paymentRes)
-
         return h.view('view-payments', { results: paymentRes })
       }
     }

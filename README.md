@@ -1,6 +1,6 @@
-# FFC Template Node
+# BNG Payment Spike
 
-Template to support rapid delivery of microservices for FFC Platform. It contains the configuration needed to deploy a simple Hapi Node server to the Azure Kubernetes Platform.
+Spike to explore the potential usage of GOV.UK Pay within BNG.
 
 ## Usage
 
