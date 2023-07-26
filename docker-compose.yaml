@@ -10,4 +10,5 @@ services:
       APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
       PAYMENT_API_URL: https://publicapi.payments.service.gov.uk/v1/payments
       PAYMENT_API_KEY:
+      COOKIE_PASSWORD: who-likes-cookies-i-like-cookies-everybody-likes-cookies
 
