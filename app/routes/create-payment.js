@@ -1,6 +1,7 @@
 const joi = require('joi')
 const config = require('../config')
 const { post } = require('../api')
+const generateReference = require('../lib/create-reference')
 const schema = require('./schemas/createPayment')
 
 module.exports = [
@@ -9,7 +10,7 @@ module.exports = [
     path: '/create-payment',
     options: {
       handler: async (request, h) => {
-        return h.view('create-payment')
+        return h.view('create-payment', { reference: generateReference() })
       }
     }
   },
