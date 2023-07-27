@@ -11,7 +11,6 @@ module.exports = [
     path: '/create-payment',
     options: {
       handler: async (request, h) => {
-        console.log(session.getPaymentReference(request, 'paymentReference'))
         return h.view('create-payment', { reference: generateReference() })
       }
     }
@@ -38,11 +37,13 @@ module.exports = [
             cardholder_name: payload.cardholder_name
           },
           email: payload.email,
-          return_url: 'http://localhost:3000/payment-successful',
+          return_url: 'http://localhost:3000/payment-return',
           language: 'en'
         }
 
         const res = await post(config.paymentApiUrl, payment, config.paymentApiKey)
+
+        session.setPaymentReference(request, 'payment_id', res.payment_id)
 
         console.log(res)
 
