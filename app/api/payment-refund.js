@@ -1,5 +1,12 @@
 const config = require('../config')
-const { post } = require('./base')
+const { get, post } = require('./base')
+const formatDate = require('../lib/format-date')
+
+const viewPaymentRefunds = async (id) => {
+  let refundResponse = await get(`${config.paymentApiUrl}/${id}/refunds`, config.paymentApiKey)
+  refundResponse = formatDate(refundResponse._embedded.refunds, 'created_date')
+  return refundResponse
+}
 
 const refundPayment = async (id, refundAmount, refundAvailable) => {
   const payload = {
@@ -10,4 +17,7 @@ const refundPayment = async (id, refundAmount, refundAvailable) => {
   return post(`${config.paymentApiUrl}/${id}/refunds`, payload, config.paymentApiKey)
 }
 
-module.exports = refundPayment
+module.exports = {
+  refundPayment,
+  viewPaymentRefunds
+}
