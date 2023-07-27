@@ -1,0 +1,16 @@
+{% extends 'layouts/layout.njk' %}
+
+{% block pageTitle %}{{ serviceName }}{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">Sorry, your payment failed</h1>
+      <p class="govuk-body">Your payment failed due to '{{ message }}'.</p>
+      <p class="govuk-body">Try again later.</p>
+      <p class="govuk-body">
+        <a class="govuk-link" href="/create-payment">Start a new payment</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

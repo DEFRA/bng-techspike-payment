@@ -1,23 +1,16 @@
 const { paymentDetails } = require('../api')
 const session = require('../session')
-const { FAILED, CANCELLED, ERROR } = require('../constants/payment-status')
 
 module.exports = [
   {
     method: 'GET',
-    path: '/payment-return',
+    path: '/payment-failed',
     options: {
       handler: async (request, h) => {
         const paymentId = session.getPaymentReference(request, 'payment_id')
         const payment = await paymentDetails(paymentId)
 
-        const status = payment.state.status
-
-        if (status === FAILED || status === CANCELLED || status === ERROR) {
-          return h.redirect('payment-failed')
-        }
-
-        return h.redirect('payment-successful')
+        return h.view('payment-failed', { message: payment.state.message })
       }
     }
   }
