@@ -6,8 +6,7 @@ const routes = [].concat(
   require('../routes/payment-refund'),
   require('../routes/payment-return'),
   require('../routes/payment-successful'),
-  require('../routes/static'),
-  require('../routes/payment')
+  require('../routes/static')
 )
 
 module.exports = {

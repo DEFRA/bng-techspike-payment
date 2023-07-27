@@ -1,6 +1,4 @@
-const config = require('../config')
-const moment = require('moment')
-const { get, post } = require('../api')
+const { fullPaymentDetails, cancelPayment } = require('../api')
 
 module.exports = [
   {
@@ -8,29 +6,8 @@ module.exports = [
     path: '/payment-detail/{id}',
     options: {
       handler: async (request, h) => {
-        const paymentResponse = await get(`${config.paymentApiUrl}/${request.params.id}`, config.paymentApiKey)
-        let refundResponse = await get(`${config.paymentApiUrl}/${request.params.id}/refunds`, config.paymentApiKey)
-        let eventsResponse = await get(`${config.paymentApiUrl}/${request.params.id}/events`, config.paymentApiKey)
-
-        console.log(paymentResponse)
-        console.log(refundResponse)
-        console.log(eventsResponse)
-
-        paymentResponse.date = moment(paymentResponse.created_date).format('DD-MM-YYYY hh:mm:ss')
-
-        refundResponse = refundResponse._embedded.refunds.map(r => {
-          const date = moment(r.created_date).format('DD-MM-YYYY hh:mm:ss')
-
-          return { ...r, date }
-        })
-
-        eventsResponse = eventsResponse.events.map(r => {
-          const date = moment(r.updated).format('DD-MM-YYYY hh:mm:ss')
-
-          return { ...r, date }
-        })
-
-        return h.view('payment-detail', { payment: paymentResponse, events: eventsResponse, refunds: refundResponse })
+        const paymentDetailData = await fullPaymentDetails(request.params.id)
+        return h.view('payment-detail', paymentDetailData)
       }
     }
   },
@@ -39,8 +16,7 @@ module.exports = [
     path: '/payment-detail/cancel/{id}',
     options: {
       handler: async (request, h) => {
-        const res = await post(`${config.paymentApiUrl}/${request.params.id}/cancel`, {}, config.paymentApiKey)
-        console.log(res)
+        await cancelPayment(request.params.id)
         return h.redirect('/view-payments')
       }
     }

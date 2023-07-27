@@ -1,6 +1,5 @@
 const joi = require('joi')
-const config = require('../config')
-const { post } = require('../api')
+const { createPayment } = require('../api')
 const generateReference = require('../lib/create-reference')
 const schema = require('./schemas/createPayment')
 const session = require('../session')
@@ -28,25 +27,8 @@ module.exports = [
       },
       handler: async (request, h) => {
         const payload = request.payload
-
-        const payment = {
-          amount: payload.amount,
-          reference: payload.reference,
-          description: payload.description,
-          prefilled_cardholder_details: {
-            cardholder_name: payload.cardholder_name
-          },
-          email: payload.email,
-          return_url: 'http://localhost:3000/payment-return',
-          language: 'en'
-        }
-
-        const res = await post(config.paymentApiUrl, payment, config.paymentApiKey)
-
+        const res = await createPayment(payload)
         session.setPaymentReference(request, 'payment_id', res.payment_id)
-
-        console.log(res)
-
         return h.redirect(res._links.next_url.href, 301)
       }
     }

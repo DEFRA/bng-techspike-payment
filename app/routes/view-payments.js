@@ -1,6 +1,4 @@
-const config = require('../config')
-const moment = require('moment')
-const { get } = require('../api')
+const { viewPayments } = require('../api')
 
 module.exports = [
   {
@@ -9,15 +7,8 @@ module.exports = [
     options: {
       handler: async (request, h) => {
         const query = new URLSearchParams(request.query)
-        const res = await get(`${config.paymentApiUrl}?${query}`, config.paymentApiKey)
-        console.log(res)
-        const paymentRes = res.results.map(r => {
-          const date = moment(r.created_date).format('DD-MM-YYYY hh:mm:ss')
-
-          return { ...r, date }
-        })
-
-        return h.view('view-payments', { results: paymentRes })
+        const paymentResults = await viewPayments(query)
+        return h.view('view-payments', paymentResults)
       }
     }
   }

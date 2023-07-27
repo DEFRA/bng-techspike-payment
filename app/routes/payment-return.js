@@ -1,6 +1,5 @@
-const api = require('../api')
+const { paymentDetails } = require('../api')
 const session = require('../session')
-const config = require('../config')
 const { FAILED, CANCELLED, ERROR } = require('../constants/payment-status')
 
 module.exports = [
@@ -10,9 +9,7 @@ module.exports = [
     options: {
       handler: async (request, h) => {
         const paymentId = session.getPaymentReference(request, 'payment_id')
-        const payment = await api.get(`${config.paymentApiUrl}/${paymentId}`, config.paymentApiKey)
-
-        console.log(payment)
+        const payment = await paymentDetails(paymentId)
 
         const status = payment.state.status
 

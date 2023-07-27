@@ -1,5 +1,4 @@
-const config = require('../config')
-const { post } = require('../api')
+const { refundPayment } = require('../api')
 
 module.exports = [
   {
@@ -8,14 +7,11 @@ module.exports = [
     options: {
       handler: async (request, h) => {
         const referrer = request.info.referrer
+        const paymentId = request.params.id
+        const refundAmount = request.payload.refund_amount
+        const refundAvailable = request.payload.refund_available
+        await refundPayment(paymentId, refundAmount, refundAvailable)
 
-        const payload = {
-          amount: parseInt(request.payload.refund_amount),
-          refund_amount_available: parseInt(request.payload.refund_available)
-        }
-
-        const res = await post(`${config.paymentApiUrl}/${request.params.id}/refunds`, payload, config.paymentApiKey)
-        console.log(res)
         return h.redirect(referrer)
       }
     }
