@@ -49,12 +49,12 @@ const config = {
   }
 }
 
-const { err, value } = schema.validate(config, {
+const { error, value } = schema.validate(config, {
   abortEarly: false
 })
 
-if (err) {
-  throw new Error(`Config is invalid: ${err.message}`)
+if (error) {
+  throw new Error(`Config is invalid: ${error.message}`)
 }
 
 module.exports = value
