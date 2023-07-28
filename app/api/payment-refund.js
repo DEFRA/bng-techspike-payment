@@ -14,7 +14,7 @@ const refundPayment = async (id, refundAmount, refundAvailable) => {
     refund_amount_available: parseInt(refundAvailable)
   }
 
-  return post(`${config.paymentApiUrl}/${id}/refunds`, payload, config.paymentApiKey)
+  return post(`${config.refundApiUrl}/${id}/refunds`, payload, config.paymentApiKey)
 }
 
 module.exports = {

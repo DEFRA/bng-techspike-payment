@@ -3,6 +3,7 @@ const { createPayment } = require('../api')
 const generateReference = require('../lib/create-reference')
 const schema = require('./schemas/createPayment')
 const session = require('../session')
+const readData = require('../data/read-data')
 
 module.exports = [
   {
@@ -10,7 +11,16 @@ module.exports = [
     path: '/create-payment',
     options: {
       handler: async (request, h) => {
-        return h.view('create-payment', { reference: generateReference() })
+        const payloadExampleRaw = readData()
+        const applicantRaw = payloadExampleRaw?.landownerGainSiteRegistration?.applicant
+
+        const applicant = {
+          name: `${applicantRaw?.firstName} ${applicantRaw?.lastName}`,
+          email: applicantRaw?.emailAddress
+        }
+
+        const payloadExample = JSON.stringify(payloadExampleRaw, null, 4)
+        return h.view('create-payment', { reference: generateReference(), applicant, payloadExample })
       }
     }
   },

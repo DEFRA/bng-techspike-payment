@@ -10,7 +10,7 @@
 <h1 class="govuk-heading-xl">Create Payment</h1>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-one-half">
     <form method="post" action="/create-payment">
       <div class="govuk-form-group">
         {{ govukInput({
@@ -60,7 +60,8 @@
           text: "What is the name of the cardholder?"
           },
           classes: "govuk-input",
-          spellcheck: false
+          spellcheck: false,
+          value: applicant.name
         }) }}
       </div>
 
@@ -72,7 +73,8 @@
           text: "What is the email of the cardholder?"
           },
           classes: "govuk-input",
-          spellcheck: false
+          spellcheck: false,
+          value: applicant.email
         }) }}
       </div>
 
@@ -80,6 +82,11 @@
         text: "Pay"
       }) }}
     </form>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <div id="viewer">
+      <textarea id="data" rows="35" cols="60">{{payloadExample}}</textarea>
+    </div>
   </div>
 </div>
 
